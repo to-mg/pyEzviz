@@ -124,8 +124,9 @@ def main() -> Any:
         required=False,
         help="Sensibility level (Non-Cameras = from 1 to 6) or (Cameras = 1 to 100)",
         type=int,
-        choices=range(0, 100),
+        choices=range(100),
     )
+
     parser_camera_alarm.add_argument(
         '--do_not_disturb', 
         required=False, 
@@ -137,7 +138,7 @@ No new notifications will be sent until do-not-disturb is disabled. \
 Movement is still recorded even if do-not-disturb is enabled.',
         default=None, 
         type=int, 
-        choices=[0,1] )    
+        choices=[0,1] )
     parser_camera_alarm.add_argument(
         "--schedule", required=False, help="Schedule in json format *test*", type=str
     )

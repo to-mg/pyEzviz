@@ -101,7 +101,7 @@ class TestRTSPAuth:
             ).encode()
         )
         msg1 = session.recv(self._rtsp_details["bufLen"])
-        seq = seq + 1
+        seq += 1
 
         if msg1.decode().find("200 OK") > 1:
             print(f"Basic auth result: {msg1.decode()}")
