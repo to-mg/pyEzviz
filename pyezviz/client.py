@@ -286,11 +286,7 @@ class EzvizClient:
             )
             return self._api_get_pagelist(page_filter, json_key, max_retries + 1)
 
-        if json_key is None:
-            json_result = json_output
-        else:
-            json_result = json_output[json_key]
-
+        json_result = json_output if json_key is None else json_output[json_key]
         if not json_result:
             # session is wrong, need to relogin
             self.login()
@@ -504,15 +500,11 @@ class EzvizClient:
         ]
 
         for device, data in devices.items():
-            if data["deviceInfos"]["deviceCategory"] in supported_categories:
-                # Add support for connected HikVision cameras
-                if (
-                    data["deviceInfos"]["deviceCategory"]
-                    == DeviceCatagories.COMMON_DEVICE_CATEGORY.value
-                    and not data["deviceInfos"]["hik"]
-                ):
-                    continue
-
+            if data["deviceInfos"]["deviceCategory"] in supported_categories and (
+                data["deviceInfos"]["deviceCategory"]
+                != DeviceCatagories.COMMON_DEVICE_CATEGORY.value
+                or data["deviceInfos"]["hik"]
+            ):
                 # Create camera object
 
                 self._cameras[device] = EzvizCamera(self, device, data).status()

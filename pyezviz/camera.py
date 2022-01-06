@@ -24,9 +24,7 @@ class EzvizCamera:
             "alarm_trigger_active": False,
             "timepassed": None,
         }
-        self._device = (
-            device_obj if device_obj else self._client.get_device_infos(self._serial)
-        )
+        self._device = device_obj or self._client.get_device_infos(self._serial)
         self._last_alarm: dict[str, Any] = {}
         self._switch: dict[int, bool] = {
             switch["type"]: switch["enable"]
